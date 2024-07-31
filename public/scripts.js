@@ -17,7 +17,7 @@ if (hasPremium) {
 }
 
 function inviteFriend() {
-    const botUsername = process.env.BOT_USERNAME || 'EasyMiniAppBot'; 
+    const botUsername = 'EasyMiniAppBot'; 
     const inviteMessage = 'Привет! Я использую miniapp и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + window.location.href;
     
     window.Telegram.WebApp.showPopup({

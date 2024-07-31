@@ -6,6 +6,8 @@ require('dotenv').config();
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 const app = express();
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
     const miniAppUrl = process.env.APP_URL;
@@ -24,8 +26,6 @@ bot.onText(/\/start/, (msg) => {
   };
   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
 });
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
