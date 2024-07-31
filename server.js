@@ -27,6 +27,14 @@ bot.onText(/\/start/, (msg) => {
   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
 });
 
+bot.onText(/\/invite/, (msg) => {
+  const chatId = msg.chat.id;
+  const inviteMessage = 'Привет! Я использую miniapp и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + process.env.APP_URL;
+
+  bot.sendMessage(chatId, inviteMessage);
+});
+
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
