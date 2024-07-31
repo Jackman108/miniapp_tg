@@ -9,7 +9,7 @@ const app = express();
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   
-  const miniAppUrl = process.env.GITHUB_PAGE || 'https://jackman108.github.io/miniapp_tg/';
+  const miniAppUrl = process.env.GITHUB_PAGE;
  
   const opts = {
     reply_markup: {
@@ -29,7 +29,7 @@ bot.onText(/\/start/, (msg) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
