@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniApp</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { text-align: center; margin-top: 50px; }
+        .avatar { border-radius: 50%; }
+        .premium { width: 20px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="avatar_url" alt="Avatar" class="avatar" width="100">
+        <h2 id="username">Имя пользователя <img id="premium-icon" src="premium_icon_url" class="premium" style="display: none;"></h2>
+        <button onclick="inviteFriend()">Пригласить друга</button>
+    </div>
+    <script>
+        const user = {
+            name: "Имя пользователя",
+            hasPremium: true,
+            avatarUrl: "avatar_url",
+        };
+
+        document.getElementById('username').innerText = user.name;
+        if (user.hasPremium) {
+            document.getElementById('premium-icon').style.display = 'inline';
+        }
+
+        function inviteFriend() {
+            alert('Выберите друга в Telegram для отправки приглашения.');
+            // Добавить логику для отправки приглашения
+        }
+    </script>
+</body>
+</html>
