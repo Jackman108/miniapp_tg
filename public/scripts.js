@@ -17,9 +17,26 @@ if (hasPremium) {
 }
 
 function inviteFriend() {
-    const inviteMessage = 'Привет! Я использую miniapp и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + window.location.href;
+    const inviteMessage = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + window.location.href;
 
+    // Создаем ссылку для приглашения
     const inviteLink = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(inviteMessage)}`;
 
-    window.Telegram.WebApp.openTelegramLink(inviteLink);
+    // Используем Inline Query для создания ссылки
+    window.Telegram.WebApp.showPopup({
+        type: 'inline_query',
+        inline_query: {
+            query: inviteLink,
+            results: [
+                {
+                    type: 'article',
+                    id: '1',
+                    title: 'Пригласить друга',
+                    input_message_content: {
+                        message_text: inviteMessage
+                    }
+                }
+            ]
+        }
+    });
 }
