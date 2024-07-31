@@ -17,7 +17,12 @@ app.get('/subscribers', (req, res) => {
       res.status(500).send('Ошибка чтения данных о подписчиках');
       return;
     }
-    res.json(JSON.parse(data));
+    try {
+      const subscribers = JSON.parse(data);
+      res.json(subscribers);
+    } catch (jsonErr) {
+      res.status(500).send('Ошибка обработки данных о подписчиках');
+    }
   });
 });
 

@@ -18,7 +18,12 @@ if (hasPremium) {
 
 // Загрузка и отображение списка подписчиков
 fetch('/subscribers')
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Сетевой ответ не OK');
+        }
+        return response.json();
+    })
     .then(subscribers => {
         const subscribersList = document.getElementById('subscribers-list');
         subscribersList.innerHTML = '<h3>Подписчики:</h3>';
@@ -44,5 +49,6 @@ fetch('/subscribers')
     .catch(error => console.error('Ошибка при загрузке подписчиков:', error));
 
 function inviteFriend() {
-    window.Telegram.WebApp.openTelegramLink('https://t.me/share/url?url=' + encodeURIComponent(window.location.href));
+    const inviteLink = 'https://t.me/share/url?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent('Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ');
+    window.Telegram.WebApp.openTelegramLink(inviteLink);
 }
