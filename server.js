@@ -7,26 +7,8 @@ require('dotenv').config();
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 const app = express();
 
-// Публикация статических файлов из папки 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Отдача данных о подписчиках
-app.get('/subscribers', (req, res) => {
-  fs.readFile('subscribers.json', (err, data) => {
-    if (err) {
-      res.status(500).send('Ошибка чтения данных о подписчиках');
-      return;
-    }
-    try {
-      const subscribers = JSON.parse(data);
-      res.json(subscribers);
-    } catch (jsonErr) {
-      res.status(500).send('Ошибка обработки данных о подписчиках');
-    }
-  });
-});
-
-// Обработка команды /start для бота
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const miniAppUrl = process.env.APP_URL;
@@ -44,22 +26,6 @@ bot.onText(/\/start/, (msg) => {
     }
   };
   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
-});
-
-// Обработка команды /invite для бота
-bot.onText(/\/invite/, (msg) => {
-  const chatId = msg.chat.id;
-  const inviteMessage = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + process.env.APP_URL;
-
-  bot.sendMessage(chatId, inviteMessage);
-});
-
-// Обработка команды /start с параметром приглашения
-bot.onText(/\/start (.+)/, (msg, match) => {
-  const chatId = msg.chat.id;
-  const inviteMessage = match[1]; // Получаем сообщение приглашения
-
-  bot.sendMessage(chatId, inviteMessage);
 });
 
 // Отдача HTML страницы для мини-приложения
