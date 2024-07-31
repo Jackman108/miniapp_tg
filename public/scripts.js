@@ -2,7 +2,7 @@ window.Telegram.WebApp.ready();
 
 // Получаем данные пользователя из Telegram WebApp
 const user =window.Telegram.WebApp.initDataUnsafe.user || {};
-const { photo_url, is_premium, username } = window.Telegram.WebApp.initDataUnsafe.user;
+const { photo_url, is_premium, username } = user;
 
 // Обновляем данные на странице
 document.getElementById('username').innerText = username;
