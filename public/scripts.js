@@ -20,12 +20,9 @@ function inviteFriend() {
     const botUsername = 'EasyMiniAppBot'; 
     const inviteMessage = 'Привет! Я использую miniapp и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + window.location.href;
     
-    window.Telegram.WebApp.showPopup({
-        title: 'Приглашение друга',
-        message: 'Выберите друга, чтобы отправить приглашение.',
-        buttons: [
-            { id: 'invite', type: 'default', text: 'Пригласить', url: `https://t.me/${botUsername}?start=${encodeURIComponent(inviteMessage)}` },
-            { id: 'cancel', type: 'close', text: 'Отмена' }
-        ]
-    });
+    // Создаем ссылку для приглашения
+    const inviteLink = `https://t.me/${botUsername}?start=${encodeURIComponent(inviteMessage)}`;
+    
+    // Открываем ссылку
+    window.Telegram.WebApp.openLink(inviteLink);
 }
