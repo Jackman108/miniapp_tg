@@ -22,5 +22,5 @@ function inviteFriend() {
     const botUsername = 'EasyMiniAppBot';
     const inviteLink = `https://t.me/${botUsername}?start=${encodeURIComponent(inviteMessage)}`;
 
-    window.Telegram.WebApp.switchInlineQuery(inviteLink);
+    window.Telegram.WebApp.openTelegramLink(inviteLink);
 }
