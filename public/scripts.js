@@ -2,7 +2,7 @@ window.Telegram.WebApp.ready();
 
 // Получаем данные пользователя из Telegram WebApp
 const user =window.Telegram.WebApp.initDataUnsafe.user || {};
-const { photo_url, is_premium, username } = user;
+const { photo_url, is_premium, username } = window.Telegram.WebApp.initDataUnsafe.user;
 
 // Обновляем данные на странице
 document.getElementById('username').innerText = username;
@@ -15,6 +15,6 @@ if (is_premium) {
 
 
 function inviteFriend() {
-    const inviteLink = 'https://t.me/share/url?url=' + window.location.href + '&text=' + ('Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ');
+    const inviteLink = 'https://t.me/share/url?url=' + encodeURIComponent(window.location.href) + '&text=' + ('Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ');
     window.Telegram.WebApp.openTelegramLink(inviteLink);
 }
