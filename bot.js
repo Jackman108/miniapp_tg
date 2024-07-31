@@ -1,9 +1,9 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
-const token = '';
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
@@ -13,7 +13,7 @@ bot.onText(/\/start/, (msg) => {
         [
           {
             text: 'Открыть miniapp',
-            url: 'https://GITHUB_PAGES_URL'
+            url: process.env.GITHUB_PAGE
           }
         ]
       ]
