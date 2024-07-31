@@ -16,27 +16,33 @@ if (hasPremium) {
     document.getElementById('premium-icon').style.display = 'none';
 }
 
+// Загрузка и отображение списка подписчиков
+fetch('/subscribers')
+    .then(response => response.json())
+    .then(subscribers => {
+        const subscribersList = document.getElementById('subscribers-list');
+        subscribersList.innerHTML = '<h3>Подписчики:</h3>';
+
+        subscribers.forEach(subscriber => {
+            const subscriberDiv = document.createElement('div');
+            subscriberDiv.className = 'subscriber';
+
+            const avatar = document.createElement('img');
+            avatar.src = subscriber.avatar;
+            avatar.alt = `${subscriber.name}'s avatar`;
+            avatar.className = 'subscriber-avatar';
+
+            const name = document.createElement('p');
+            name.innerText = subscriber.name;
+
+            subscriberDiv.appendChild(avatar);
+            subscriberDiv.appendChild(name);
+
+            subscribersList.appendChild(subscriberDiv);
+        });
+    })
+    .catch(error => console.error('Ошибка при загрузке подписчиков:', error));
+
 function inviteFriend() {
-    const inviteMessage = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + window.location.href;
-
-    // Создаем ссылку для приглашения
-    const inviteLink = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(inviteMessage)}`;
-
-    // Используем Inline Query для создания ссылки
-    window.Telegram.WebApp.showPopup({
-        type: 'inline_query',
-        inline_query: {
-            query: inviteLink,
-            results: [
-                {
-                    type: 'article',
-                    id: '1',
-                    title: 'Пригласить друга',
-                    input_message_content: {
-                        message_text: inviteMessage
-                    }
-                }
-            ]
-        }
-    });
+    window.Telegram.WebApp.openTelegramLink('https://t.me/share/url?url=' + encodeURIComponent(window.location.href));
 }
