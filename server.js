@@ -8,8 +8,7 @@ const app = express();
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  
-  const miniAppUrl = process.env.GITHUB_PAGE;
+    const miniAppUrl = process.env.APP_URL;
  
   const opts = {
     reply_markup: {

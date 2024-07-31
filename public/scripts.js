@@ -17,6 +17,15 @@ if (hasPremium) {
 }
 
 function inviteFriend() {
-    const inviteMessage = 'Привет! Я использую miniapp и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: http://localhost:3000/';
-    window.Telegram.WebApp.sendData(inviteMessage);
+    const botUsername = process.env.BOT_USERNAME || 'EasyMiniAppBot'; 
+    const inviteMessage = 'Привет! Я использую miniapp и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + window.location.href;
+    
+    window.Telegram.WebApp.showPopup({
+        title: 'Приглашение друга',
+        message: 'Выберите друга, чтобы отправить приглашение.',
+        buttons: [
+            { id: 'invite', type: 'default', text: 'Пригласить', url: `https://t.me/${botUsername}?start=${encodeURIComponent(inviteMessage)}` },
+            { id: 'cancel', type: 'close', text: 'Отмена' }
+        ]
+    });
 }
