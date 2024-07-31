@@ -9,7 +9,7 @@ const app = express();
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   
-  const miniAppUrl = process.env.GITHUB_PAGE;
+  const miniAppUrl = process.env.GITHUB_PAGE || 'https://jackman108.github.io/miniapp_tg/';
  
   const opts = {
     reply_markup: {
