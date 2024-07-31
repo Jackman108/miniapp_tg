@@ -1,19 +1,23 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
-const app = express();
+const path = require('path');
 require('dotenv').config();
 
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
+const app = express();
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
+  
+  const miniAppUrl = process.env.GITHUB_PAGE;
+ 
   const opts = {
     reply_markup: {
       inline_keyboard: [
         [
           {
             text: 'Открыть miniapp',
-            url: process.env.GITHUB_PAGE
+            web_app: { url: miniAppUrl }
           }
         ]
       ]
@@ -22,8 +26,10 @@ bot.onText(/\/start/, (msg) => {
   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
 });
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  res.send('Бот работает!');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
