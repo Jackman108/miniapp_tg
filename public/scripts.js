@@ -17,12 +17,9 @@ if (hasPremium) {
 }
 
 function inviteFriend() {
-    const botUsername = 'EasyMiniAppBot'; 
     const inviteMessage = 'Привет! Я использую miniapp и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ' + window.location.href;
 
-    // Создаем ссылку для приглашения
-    const inviteLink = `https://t.me/${botUsername}?start=${encodeURIComponent(inviteMessage)}`;
+    const inviteLink = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(inviteMessage)}`;
 
-    // Открываем ссылку в Telegram
     window.Telegram.WebApp.openTelegramLink(inviteLink);
 }

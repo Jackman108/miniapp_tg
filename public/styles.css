@@ -1,17 +1,34 @@
 body {
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
+
 .container {
     text-align: center;
-    margin-top: 50px;
 }
+
 .avatar {
     border-radius: 50%;
 }
+
 .premium {
-    width: 20px;
-    vertical-align: middle;
+    margin-left: 10px;
 }
+
 .invite-button {
     margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.invite-button:hover {
+    background-color: #0056b3;
 }
