@@ -12,7 +12,8 @@ document.getElementById('avatar').src = photoUrl;
 document.getElementById('premium-icon').style.display = is_premium ? 'inline' : 'none';
 
 function inviteFriend() {
-    const text = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ';
+    const text = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение';
     const inviteLink = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
+    console.log('inviteLink:', inviteLink);
     window.Telegram.WebApp.openTelegramLink(inviteLink);
 }

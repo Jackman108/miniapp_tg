@@ -21,8 +21,6 @@ bot.onText(/\/start/, async (msg) => {
     const urlWithParams = new URL(miniAppUrl);
     urlWithParams.searchParams.append('photo_url', (photoUrl));
 
-    console.log('photoUrl:', urlWithParams);
-
     const opts = {
       reply_markup: {
         inline_keyboard: [
