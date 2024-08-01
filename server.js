@@ -35,6 +35,7 @@ bot.onText(/\/start/, async (msg) => {
         ]
       }
     };
+    console.log(photoUrl);
 
     bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
   } catch (err) {
