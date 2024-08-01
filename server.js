@@ -28,6 +28,26 @@ bot.onText(/\/start/, (msg) => {
   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts)
 });
 
+bot.onText(/\/getphoto/, (msg) => {
+  const chatId = msg.chat.id;
+
+  bot.getUserProfilePhotos(msg.from.id).then((res) => {
+      if (res.photos.length > 0) {
+          const fileId = res.photos[0][0].file_id;
+          bot.getFile(fileId).then((result) => {
+              const filePath = result.file_path;
+              const photoUrl = `https://api.telegram.org/file/bot${token}/${filePath}`;
+              bot.sendMessage(chatId, photoUrl);
+          });
+      } else {
+          bot.sendMessage(chatId, 'У вас нет фото профиля.');
+      }
+  }).catch(err => {
+      bot.sendMessage(chatId, 'Ошибка при получении фото профиля.');
+      console.error(err);
+  });
+});
+
 app.get('/', (req, res) => {
   res.sendFile(indexPath);
 });
