@@ -14,7 +14,7 @@ bot.onText(/\/start/, (msg) => {
   const miniAppUrl = process.env.APP_URL;
 
   const username = msg.from.username;
-
+  console.log(username)
   // Создаем URL с параметром
   const miniAppUrlWithParams = `${miniAppUrl}?username=${encodeURIComponent(username)}`;
 
