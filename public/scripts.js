@@ -17,6 +17,7 @@ if (is_premium) {
 }
 
 function inviteFriend() {
-    const inviteLink = 'https://t.me/EasyMiniAppBot/menu' + 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение';
-    window.Telegram.WebApp.openTelegramLink(inviteLink);
+    const text = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение: ';
+    const inviteLink = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
+        window.Telegram.WebApp.openTelegramLink(inviteLink);
 }
