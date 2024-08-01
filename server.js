@@ -8,7 +8,6 @@ const bot = new TelegramBot(token, { polling: true });
 const app = express();
 
 const indexPath = path.join(__dirname, 'index.html');
-
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const miniAppUrl = process.env.APP_URL;
@@ -18,10 +17,11 @@ bot.onText(/\/start/, async (msg) => {
     const photoUrl = user.photos.length > 0
       ? `https://api.telegram.org/file/bot${token}/${(await bot.getFile(user.photos[0][0].file_id)).file_path}`
       : 'https://i.shgcdn.com/432a91c0-438c-4aea-9581-6015be274fe0/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
-
-    // Добавляем параметр к URL
+    
     const urlWithParams = new URL(miniAppUrl);
     urlWithParams.searchParams.append('photo_url', encodeURIComponent(photoUrl));
+
+    console.log('photoUrl:', urlWithParams.toString());
 
     const opts = {
       reply_markup: {
@@ -35,7 +35,6 @@ bot.onText(/\/start/, async (msg) => {
         ]
       }
     };
-    console.log(photoUrl);
 
     bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
   } catch (err) {
@@ -49,7 +48,6 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.static(__dirname));
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
