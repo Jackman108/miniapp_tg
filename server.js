@@ -13,6 +13,9 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const miniAppUrl = process.env.APP_URL;
 
+  console.log('Received /start command from chat ID:', chatId);
+  console.log('MiniApp URL:', miniAppUrl)
+
   const opts = {
     reply_markup: {
       inline_keyboard: [
@@ -25,8 +28,11 @@ bot.onText(/\/start/, (msg) => {
       ]
     }
   };
-  bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
+  bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts)
+    .then(() => console.log('Message sent'))
+    .catch((err) => console.error('Error sending message:', err)); // Логирование ошибки при отправке сообщения
 });
+
 
 // Отдача HTML страницы для мини-приложения
 app.get('/', (req, res) => {
