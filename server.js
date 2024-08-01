@@ -7,7 +7,7 @@ require('dotenv').config();
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 const app = express();
 
-app.use(express.static(path.join()));
+const indexPath = path.join(__dirname, 'index.html');
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
@@ -28,13 +28,12 @@ bot.onText(/\/start/, (msg) => {
   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts)
 });
 
-
-// Отдача HTML страницы для мини-приложения
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(indexPath);
 });
 
-// Запуск сервера на порту из переменных окружения или 3000 по умолчанию
+app.use(express.static(__dirname));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
