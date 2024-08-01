@@ -13,13 +13,18 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const miniAppUrl = process.env.APP_URL;
 
+  const username = msg.from.username;
+
+  // Создаем URL с параметром
+  const miniAppUrlWithParams = `${miniAppUrl}?username=${encodeURIComponent(username)}`;
+
   const opts = {
     reply_markup: {
       inline_keyboard: [
         [
           {
             text: 'Открыть miniapp',
-            web_app: { url: miniAppUrl }
+            web_app: { url: miniAppUrlWithParams  }
           }
         ]
       ]
