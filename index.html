@@ -1,24 +1,80 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiniApp</title>
-    <link rel="stylesheet" href="public/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .avatar {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .premium {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        .invite-button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <img id="avatar" src="https://i.shgcdn.com/432a91c0-438c-4aea-9581-6015be274fe0/-/format/auto/-/preview/3000x3000/-/quality/lighter/" alt="Avatar" class="avatar" width="100">
+        <img id="avatar" src="https://i.shgcdn.com/432a91c0-438c-4aea-9581-6015be274fe0/-/format/auto/-/preview/3000x3000/-/quality/lighter/" alt="Avatar" class="avatar">
         <h2 id="username">Имя пользователя</h2>
         <img 
-        id="premium-icon" 
-        src="https://t4.ftcdn.net/jpg/05/33/75/35/360_F_533753588_1krxEE0SDZWl0ZKd9cUzCL6HaTRo9UxK.jpg" 
-        class="premium" 
-        style="display: none;"
-        >
+            id="premium-icon" 
+            src="https://t4.ftcdn.net/jpg/05/33/75/35/360_F_533753588_1krxEE0SDZWl0ZKd9cUzCL6HaTRo9UxK.jpg" 
+            class="premium" 
+            style="display: none;"
+            alt="Premium">
         <button class="invite-button" onclick="inviteFriend()">Пригласить друга</button>
         <div id="subscribers-list"></div>
     </div>
-    <script src="public/scripts.js"></script>
+    <script>
+        window.Telegram.WebApp.ready();
+
+        // Получаем данные пользователя из Telegram WebApp
+        const user = window.Telegram.WebApp.initDataUnsafe.user || {};
+        const { photo_url, username, is_premium } = user;
+
+        // Обновляем данные на странице
+        document.getElementById('username').innerText = username || 'Имя пользователя';
+        document.getElementById('avatar').src = photo_url || 'https://i.shgcdn.com/432a91c0-438c-4aea-9581-6015be274fe0/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
+        document.getElementById('premium-icon').style.display = is_premium ? 'inline' : 'none';
+
+        function inviteFriend() {
+            const text = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение:';
+            const inviteLink = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
+            window.Telegram.WebApp.openTelegramLink(inviteLink);
+        }
+    </script>
 </body>
 </html>
