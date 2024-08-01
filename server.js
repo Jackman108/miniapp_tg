@@ -13,9 +13,6 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const miniAppUrl = process.env.APP_URL;
 
-  console.log('Received /start command from chat ID:', chatId);
-  console.log('MiniApp URL:', miniAppUrl)
-
   const opts = {
     reply_markup: {
       inline_keyboard: [
