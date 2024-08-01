@@ -5,7 +5,7 @@ const photoUrl = urlParams.get('photo_url') || 'https://i.shgcdn.com/432a91c0-43
 const user = window.Telegram.WebApp.initDataUnsafe.user || {};
 const { username, is_premium } = user;
 
-console.log('data:', user);
+console.log('user data:', user);
 
 document.getElementById('username').innerText = username || 'Имя пользователя';
 document.getElementById('avatar').src = photoUrl;

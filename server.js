@@ -1,10 +1,9 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 require('dotenv').config();
 
-const token = process.env.TELEGRAM_BOT_TOKEN
+const token = process.env.TELEGRAM_BOT_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 const app = express();
 
@@ -20,22 +19,24 @@ bot.onText(/\/start/, async (msg) => {
       ? `https://api.telegram.org/file/bot${token}/${(await bot.getFile(user.photos[0][0].file_id)).file_path}`
       : 'https://i.shgcdn.com/432a91c0-438c-4aea-9581-6015be274fe0/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
 
+    // Добавляем параметр к URL
     const urlWithParams = new URL(miniAppUrl);
     urlWithParams.searchParams.append('photo_url', encodeURIComponent(photoUrl));
 
-  const opts = {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: 'Открыть miniapp',
-            web_app: { url: urlWithParams }
-          }
+    const opts = {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Открыть miniapp',
+              web_app: { url: urlWithParams.toString() }
+            }
+          ]
         ]
-      ]
-    }
-  };
-   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
+      }
+    };
+
+    bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
   } catch (err) {
     console.error('Ошибка при получении фото профиля:', err);
     bot.sendMessage(chatId, 'Ошибка при получении фото профиля.');
