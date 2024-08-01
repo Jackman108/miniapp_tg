@@ -1,7 +1,7 @@
 window.Telegram.WebApp.ready();
 
-const initData = window.Telegram.WebApp.initData;
-const user = JSON.parse(decodeURIComponent(initData)).user || {};
+const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+const user = initDataUnsafe.user || {};
 const { username, photo_url, is_premium } = user;
 
 document.getElementById('username').innerText = username;
