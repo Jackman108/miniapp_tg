@@ -29,7 +29,7 @@ bot.onText(/\/start/, async (msg) => {
         [
           {
             text: 'Открыть miniapp',
-            web_app: { url: urlWithParams.toString() }
+            web_app: { url: urlWithParams }
           }
         ]
       ]
