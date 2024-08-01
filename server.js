@@ -26,8 +26,6 @@ bot.onText(/\/start/, (msg) => {
     }
   };
   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts)
-    .then(() => console.log('Message sent'))
-    .catch((err) => console.error('Error sending message:', err)); // Логирование ошибки при отправке сообщения
 });
 
 
