@@ -12,7 +12,7 @@ document.getElementById('avatar').src = photoUrl;
 document.getElementById('premium-icon').style.display = is_premium ? 'inline' : 'none';
 
 function inviteFriend() {
-    const text = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку (https://jackman108.github.io/miniapp_tg/), чтобы открыть приложение';
+    const text = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение';
 
     const cleanAppUrl = 'https://jackman108.github.io/miniapp_tg';
     
