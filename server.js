@@ -7,7 +7,7 @@ require('dotenv').config();
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join()));
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
