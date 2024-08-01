@@ -4,14 +4,24 @@ const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
 
-const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
+const token = process.env.TELEGRAM_BOT_TOKEN
+const bot = new TelegramBot(token, { polling: true });
 const app = express();
 
 const indexPath = path.join(__dirname, 'index.html');
 
-bot.onText(/\/start/, (msg) => {
+bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
   const miniAppUrl = process.env.APP_URL;
+
+  try {
+    const user = await bot.getUserProfilePhotos(msg.from.id);
+    const photoUrl = user.photos.length > 0
+      ? `https://api.telegram.org/file/bot${token}/${(await bot.getFile(user.photos[0][0].file_id)).file_path}`
+      : 'https://i.shgcdn.com/432a91c0-438c-4aea-9581-6015be274fe0/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
+
+    const urlWithParams = new URL(miniAppUrl);
+    urlWithParams.searchParams.append('photo_url', encodeURIComponent(photoUrl));
 
   const opts = {
     reply_markup: {
@@ -25,27 +35,11 @@ bot.onText(/\/start/, (msg) => {
       ]
     }
   };
-  bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts)
-});
-
-bot.onText(/\/getphoto/, (msg) => {
-  const chatId = msg.chat.id;
-
-  bot.getUserProfilePhotos(msg.from.id).then((res) => {
-      if (res.photos.length > 0) {
-          const fileId = res.photos[0][0].file_id;
-          bot.getFile(fileId).then((result) => {
-              const filePath = result.file_path;
-              const photoUrl = `https://api.telegram.org/file/bot${token}/${filePath}`;
-              bot.sendMessage(chatId, photoUrl);
-          });
-      } else {
-          bot.sendMessage(chatId, 'У вас нет фото профиля.');
-      }
-  }).catch(err => {
-      bot.sendMessage(chatId, 'Ошибка при получении фото профиля.');
-      console.error(err);
-  });
+   bot.sendMessage(chatId, 'Привет! Нажмите кнопку ниже, чтобы открыть miniapp.', opts);
+  } catch (err) {
+    console.error('Ошибка при получении фото профиля:', err);
+    bot.sendMessage(chatId, 'Ошибка при получении фото профиля.');
+  }
 });
 
 app.get('/', (req, res) => {
