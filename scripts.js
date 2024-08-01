@@ -14,7 +14,7 @@ document.getElementById('premium-icon').style.display = is_premium ? 'inline' : 
 function inviteFriend() {
     const text = 'Привет! Я использую мини-приложение и хотел бы, чтобы ты тоже присоединился. Нажми на ссылку, чтобы открыть приложение';
 
-    const cleanAppUrl = 'https://jackman108.github.io/miniapp_tg/';
+    const cleanAppUrl = 'https://jackman108.github.io/miniapp_tg';
     
     const inviteLink = `https://t.me/share/url?url=${encodeURIComponent(cleanAppUrl)}&text=${encodeURIComponent(text)}`;
     console.log('inviteLink:', inviteLink);
